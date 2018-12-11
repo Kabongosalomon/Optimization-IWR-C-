@@ -3,7 +3,7 @@
 
 using namespace std;
 
-//Power function
+//Power function  a more eﬃcient recursive implementation
 int f(int q, int n){
    /* This is called the base condition, it is
     * very important to specify the base condition
@@ -12,8 +12,8 @@ int f(int q, int n){
     */
    if (n == 0)
         return 1;
-   else 
-       return pow(q,n)*f(q,n-1);
+   else
+	return f(q,n-1)*q;
 }
 int main(){
    int num;
@@ -25,6 +25,6 @@ int main(){
    cout<<"Enter the power: ";
    cin>>power;
 
-   cout<<num<<" on power "<<power<<" = "<<f(num,power);
+   cout<<num<<"^"<<power<<" = "<<f(num,power);
    return 0;
 }

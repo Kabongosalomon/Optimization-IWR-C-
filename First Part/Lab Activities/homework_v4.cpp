@@ -14,11 +14,12 @@ int main(){
 
    cout<<"Enter the power: ";
    cin>>n;
-   while (n>=0)
+   for (int i = 0 ; i < n ; ++i)
    {
-	   value*=pow(q,n);
-	   n--;
+	   value*=q;
    }
    cout<<"Result = "<<value;
    return 0;
 }
+
+
