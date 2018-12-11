@@ -16,7 +16,7 @@ int main(){
    cin>>n;
    for (int i = 0 ; i < n ; ++i)
    {
-	   value*=q;
+	   value*=q+1;
    }
    cout<<"Result = "<<value;
    return 0;
