@@ -1,23 +1,31 @@
 #include <iostream>
 #include <cmath>
 
-using namespace std;
-
-
 int main(){
+  /* This function computer q^n
+    * using iterativilly. 
+    *
+    * Please note that The first codition is called the base condition, it is
+    * very important to specify the base condition
+    * in recursion, otherwise your program will throw
+    * stack overflow error.
+    *
+    * By : Salomon K. 12-Dec-2018 AIMS SA
+    */
+
    int q;
    int n;
    int value=1;
    	
-   cout<<"Enter a number: ";
-   cin>>q;
+   std::cout<<"Enter a number: ";
+   std::cin>>q;
 
-   cout<<"Enter the power: ";
-   cin>>n;
+   std::cout<<"Enter the power: ";
+   std::cin>>n;
    for (int i = 0 ; i < n ; ++i)
    {
 	   value*=q;
    }
-   cout<<"Result = "<<value;
+   std::cout<<"Result = "<<value;
    return 0;
 }

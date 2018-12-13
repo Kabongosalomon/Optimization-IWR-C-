@@ -1,8 +1,6 @@
 #include <iostream>
 #include <cmath>
 
-using namespace std;
-
 //Power function  a more eﬃcient recursive implementation
 int f_v1(int q, int n){
    /* This is called the base condition, it is
@@ -13,7 +11,7 @@ int f_v1(int q, int n){
    if (n == 0)
         return 1;
    else if(n%2==0)
-	   return pow(q,n/2)*pow(q,n/2); 
+	   return  std::pow(q,n/2)*pow(q,n/2); 
    else
 	return f_v1(q,n-1)*q;
 }
@@ -37,12 +35,18 @@ int main(){
    int num;
    int power;
    	
-   cout<<"Enter a number: ";
-   cin>>num;
+   std::cout<<"Enter a number: ";
+   std::cin>>num;
 
-   cout<<"Enter the power: ";
-   cin>>power;
+   std::cout<<"Enter the power: ";
+   std::cin>>power;
 
-   cout<<num<<"^"<<power<<" = "<<f_v2(num,power);
+   //time_point begin = now();
+   
+   std::cout<<num<<"^"<<power<<" = "<<f_v2(num,power);
+   
+   //time_point end= now();
+   
+   //print_time("Speed :",begin,end);
    return 0;
 }

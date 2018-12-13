@@ -1,25 +1,26 @@
 #include <iostream>
 #include <cmath>
 
-using namespace std;
-
 
 int main(){
+/*
+ * This function shows the efficient way to compute q^n
+ * using this technique : q^n:=(q^2)^(n/2)
+ */
+
    int q;
    int n;
    int value=1;
    	
-   cout<<"Enter a number: ";
-   cin>>q;
+   std::cout<<"Enter a number: ";
+   std::cin>>q;
 
-   cout<<"Enter the power: ";
-   cin>>n;
+   std::cout<<"Enter the power: ";
+   std::cin>>n;
    for (int i = 0 ; i < n ; ++i)
    {
 	   value*=q;
    }
-   cout<<"Result = "<<value;
+   std::cout<<"Result = "<<value;
    return 0;
 }
-
-
