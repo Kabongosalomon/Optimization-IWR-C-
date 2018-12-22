@@ -166,8 +166,12 @@ int main(){
    // Second Function
    
    // record start time
-   start = std::chrono::high_resolution_clock::now();
-   // do some work    
+   start = std::chrono::high_resolution_clock::now();   
+   // do some work 
+   for (int i = 0 ; i < 100000000 ; ++i)
+   {
+	   f_iter(q,n);
+   }
    std::cout<<"Result Iterative="<<f_iter(q,n)<<std::endl;
    // record end time
    end = std::chrono::high_resolution_clock::now();
