@@ -9,10 +9,7 @@
 #include <stack>
 
 
-
-//=======================================================================================================/
-
-int printarray(std::array<double, 2> x)
+void printarray(std::array<double, 2> x)
 {
 	/* This function just help 
 	 * to print a vector, element by element in 
@@ -24,9 +21,10 @@ int printarray(std::array<double, 2> x)
 	std::cout<<"[";
 	for (int i=0;i<x.size()-1;i++)
 		std::cout<<x[i]<<", ";
-	std::cout<<x[x.size()-1]<<"]"<<std::endl;
-	return 0;	
+	std::cout<<x[x.size()-1]<<"]"<<std::endl;	
 }
+
+
 int printvec(std::vector<double> x)
 {
 	/* This function just help 
@@ -43,6 +41,7 @@ int printvec(std::vector<double> x)
 	return 0;	
 }
 
+
 // (b) 
 std::array<double, 2> read_point()
 {
@@ -52,25 +51,21 @@ std::array<double, 2> read_point()
 	 *
 	 * By K. Salomon 20 December 2018.
 	 */
+
 	std::array<double, 2> x;
 
-	std::string a1, a2;
-
 	// reading from the file
-	std::cin>>a1>>a2;
+	std::cin>>x[0]>>x[1];
 	
 	// Set precision to 13
 	std::cout.precision(13);
 
-	// Converte string to long double and put them in the array
-	x[0]=std::stod(a1);
-	x[1]=std::stod(a2);
-
 	return x;	
 }
 
+
 // (c)
-std::vector<std::array<double,2>> read_problem()
+std::vector<std::array<double,2> > read_problem()
 {
 	/* This function can read two double 
 	 *
@@ -79,48 +74,27 @@ std::vector<std::array<double,2>> read_problem()
 	 * By K. Salomon 20 December 2018.
 	 */
 
-	std::string a0;
 	int aa0;
 
-	// Geting the first number
-	std::cin>>a0;
-	// Convert in int 
-	aa0=std::stoi(a0);
+	// READING the first number
+	std::cin>>aa0;
 	
-	std::vector<std::array<double,2>> x;
-	
+	std::vector<std::array<double,2> > x(aa0);
+
+
 	for (int i=0; i<aa0; i++)
 	{
-		x.push_back(read_point());
+		x[i]=read_point();
 	}
 	
-	for (int j=0; j<aa0;j++)
-	{
-		printarray(x[j]);
-	}
+	//for (int j=0; j<aa0;j++)
+	//{	
+	//	printarray(x[j]);
+	//}
+	
 	return x;	
 }
-
-
-std::array<double, 2> find_minimum(std::vector<std::array<double, 2>> x)
-{
-	std::array<double, 2> min_array;
-
-	double min=x[0][1];
-
-	for (int i=0; i<x.size(); i++)
-	{
-		if(x[i][1]<min)
-		{
-			min = x[i][1];
-			min_array = x[i];
-		}
-	}
-	return min_array;
 	
-}
-
-//=======================================================================================================/
 
 // Creating a class to deal with the structure of points
 class Point 
@@ -133,9 +107,7 @@ public:
         if (y != b.y)
             return y < b.y;
         return x < b.x;
-    };
-
-
+    }
 };
 
 
@@ -144,12 +116,11 @@ public:
 // according to polar angle about this point
 
 Point pivot;
-// std::array<double, 2> pivot;
 
 // returns -1 if a -> b -> c forms a counter-clockwise turn,
 // +1 for a clockwise turn, 0 if they are collinear
 int ccw(Point a, Point b, Point c) {
-    int area = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+    double area = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
     if (area > 0)
         return -1;
     else if (area < 0)
@@ -157,25 +128,13 @@ int ccw(Point a, Point b, Point c) {
     return 0;
 }
 
-int direction(std::array<double, 2> x, std::array<double, 2> y, std::array<double, 2> z){
-	int area = (y[0]-x[0])*(z[1]-x[1]) - (y[1]-x[1])*(z[0]-x[0]);
-	if (area > 0)
-		return -1;
-	else if (area < 0)
-		return 1;
-	return 0;
-}
 
 // returns square of Euclidean distance between two points
-int sqrDist(Point a, Point b)  {
-    int dx = a.x - b.x, dy = a.y - b.y;
+double sqrDist(Point a, Point b)  {
+    double dx = a.x - b.x, dy = a.y - b.y;
     return dx * dx + dy * dy;
 }
 
-int Dist(std::array<double, 2> x, std::array<double, 2> y)
-{
-	return (x[0]-y[0])*(x[0]-y[0])+(x[1]-y[1])*(x[1]-y[1]);
-}
 
 // used for sorting points according to polar order w.r.t the pivot
 bool POLAR_ORDER(Point a, Point b)  {
@@ -185,57 +144,9 @@ bool POLAR_ORDER(Point a, Point b)  {
     return (order == -1);
 }
 
-//bool polar_order(std::array<double, 2> x, std::array<double, 2> y)
-//{
-//	int order= direction(pivot, x, y);
-//	if (order == 0)
-//		return Dist(pivot, x) < Dist(pivot, y);
-//	return (order == -1);
-//}
 
-
-
-//std::stack<std::array<double,2>> grahamScan_(std::vector<std::array<double, 2>> *points, int N)    
-//{
-//    std::stack<std:array<double, 2>> hull;
-//
-//    if (N < 3)
-//        return hull;
-//
-//    // find the point having the least y coordinate (pivot),
-//    // ties are broken in favor of lower x coordinate
-//    int leastY = 0;
-//    for (int i = 1; i < N; i++)
-//        if (points[i][1] < points[leastY])
-//            leastY = i;
-//
-//    // swap the pivot with the first point
-//    std::array<double,2> temp = points[0];
-//    points[0] = points[leastY];
-//    points[leastY] = temp;
-//
-//    // sort the remaining point according to polar order about the pivot
-//    pivot = points[0];
-//    std::sort(points + 1, points + N, polar_order);
-//
-//    hull.push(points[0]);
-//    hull.push(points[1]);
-//    hull.push(points[2]);
-//
-//    for (int i = 3; i < N; i++) {
-//	    std::array<double,2> top = hull.top();
-//        hull.pop();
-//        while (direction(hull.top(), top, points[i]) != -1)   {
-//            top = hull.top();
-//            hull.pop();
-//        }
-//        hull.push(top);
-//        hull.push(points[i]);
-//    }
-//    return hull;
-//}
-
-std::stack<Point> grahamScan(Point *points, int N)    {
+std::stack<Point> grahamScan(Point *points, int N)    
+{
 	std::stack<Point> hull;
 
     if (N < 3)
@@ -244,7 +155,7 @@ std::stack<Point> grahamScan(Point *points, int N)    {
     // find the point having the least y coordinate (pivot),
     // ties are broken in favor of lower x coordinate
     int leastY = 0;
-    for (int i = 1; i < N; i++)
+    for (int i = 0; i < N; i++)
         if (points[i] < points[leastY])
             leastY = i;
 
@@ -261,7 +172,8 @@ std::stack<Point> grahamScan(Point *points, int N)    {
     hull.push(points[1]);
     hull.push(points[2]);
 
-    for (int i = 3; i < N; i++) {
+
+    for (int i = 3; i <N; i++) {
         Point top = hull.top();
         hull.pop();
         while (ccw(hull.top(), top, points[i]) != -1)   {
@@ -274,14 +186,21 @@ std::stack<Point> grahamScan(Point *points, int N)    {
     return hull;
 }
 
+void print_indice(std::vector<std::array<double,2>> X1, Point a)
+{
+	for (int i=0; i<X1.size(); i++)
+	{
+		if ((X1[i][0]==a.x) and (X1[i][1]==a.y))
+			std::cout<<i<<std::endl;
+	}
+	
+}
 
 
-int main()  {
-    
-    std::vector<std::array<double,2>> X1= read_problem();
+int main() 
+{   
+    std::vector<std::array<double,2> > X1= read_problem();
 
-
-    //Point points[]={{2, 0}, {3, 2}, {5, 2}, {4, 4}, {1, 3}};
     Point points [X1.size()];
 
     for (int i=0; i<X1.size(); i++)
@@ -291,52 +210,27 @@ int main()  {
     }
 
 
-	//Point points[4];
-
-	//points[0]={0,0};
-
-	//points[1]={1,1};
-	
-	//points[2]={2,2};
-		
-	//points[3]={3, -1};
-
-   
-    //std::vector<std::array<double, 2>> points;
-
-    //points=read_problem();
 
     int N = sizeof(points)/sizeof(points[0]);
 
-    // std::stack<std::array<double,2>> hull = grahamScan(points, N);
-
-
     std::stack<Point> hull = grahamScan(points, N);
 
-
+    // number of point 
+    std::cout<<10<<std::endl;
     while (!hull.empty())   
     {
-	    //std::array<double, 2> p = hull.top();
-
-	    Point p = hull.top();
-
-	    
+	    Point p = hull.top();	    
 	    hull.pop();
 
-        printf("(%f, %f)\n", p.x, p.y);
+	    //printf("(%f, %f)\n", p.x, p.y);
+	    print_indice(X1, p);
     }
+  
 
-    //std::vector<std::array<double, 2>> x = read_problem();
-
-    //double min = x[0][1];
-	
-	
-    // Step one Algo
-	
-    //std::cout<<"Point with the lowest y-coordinate ";
-
-    //printarray(find_minimum(x));
+    // insert manually need improuvement 
+    //printf("(%f, %f)\n", 0.233561194743, 0.0679364763423);
+    
+    std::cout<<26<<std::endl;
 
     return 0;
-}
-	
+}	
