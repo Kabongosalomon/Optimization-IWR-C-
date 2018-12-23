@@ -21,8 +21,8 @@ int printvec(std::vector<int> x)
 	return 0;	
 }
 
-// (a)
-int funct(std::vector<int> x)
+// (b)
+int smallest_biggest(std::vector<int> x)
 {
 	/* This function calculate and 
 	 * print on the stard output 
@@ -78,7 +78,7 @@ int main(int argc, char** argv)
 	// a vector of 10 integers
 	std::vector<int> v1(10);
 
-	for (int i=0; i<10;i++)
+	for (int i=0; i<9;i++)
 	{
 		std::cout<<"Enter "<<i+1<<" component ";
 		std::cin>>v1[i];
@@ -89,10 +89,10 @@ int main(int argc, char** argv)
 		std::cout<<i<<std::endl;
 	}
 
-	funct(v1);
+	smallest_biggest(v1);
 
 
-	std::cout<<"Size of v1: "<<v1.size()<<std::endl;
+	//std::cout<<"Size of v1: "<<v1.size()<<std::endl;
 	printvec(v1);
 
 	printvec(reverse(v1));
@@ -105,7 +105,7 @@ int main(int argc, char** argv)
 		std::cout<<i<<" ";
 
 
-// a) Entries have value that cames from memory (gabarage)
+// a) Entries have 0 as value
 
 // an empty vector of integers
 // std::vector<int> v1;
